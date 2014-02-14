@@ -3,6 +3,8 @@
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
+
+
 })
 
 /*
@@ -27,6 +29,13 @@ function addProjectDetails(e) {
 	var idNumber = projectID.substr('project'.length);
 
 	console.log("User clicked on project " + idNumber);
+
+		var temp = "/project/" + idNumber;
+		$.get(temp, addProject);
+	
+		console.log("/project/" + idNumber);
+
+	
 }
 
 /*
@@ -35,4 +44,28 @@ function addProjectDetails(e) {
  */
 function randomizeColors(e) {
 	console.log("User clicked on color button");
+	$.get("/palette", magicalworldofcolors);
 }
+
+function addProject(e){
+	console.log(e);
+
+	var temp="#project" + e['id'] + " .details";
+
+	console.log(temp);
+	var projectHTML = '<img src="' + e['image'] + '" class="detailsImage">' +
+		 + ' <h3>'+  e['date'] + '</h3>' + e['summary'];
+
+	$(temp).html(projectHTML);
+}
+
+function magicalworldofcolors(e){
+	var colors = e['hex'];
+
+	$('body').css('background-color', colors[0]);
+	$('.thumbnail').css('background-color', colors[1]);
+	$('h1, h2, h3, h4, h5, h5').css('color', colors[2]);
+	$('p').css('color', colors[3]);
+	$('.project img').css('opacity', .75);
+}
+
